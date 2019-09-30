@@ -16,8 +16,16 @@ Create and manage tmux sessions easily.
 
 ## Installation
 
+### Ruby gem
+
 ```
 gem install tmuxinator
+```
+
+### Homebrew
+
+```
+brew install tmuxinator
 ```
 
 ## Editor and Shell
@@ -25,7 +33,7 @@ gem install tmuxinator
 tmuxinator uses your shell's default editor for opening files. If you're not
 sure what that is type:
 
-``` bash
+```bash
 echo $EDITOR
 ```
 
@@ -207,6 +215,7 @@ You can set tmuxinator to skip auto-attaching to the session by using the `attac
 ```yaml
 attach: false
 ```
+
 If you want to attach to tmux in a non-standard way (e.g. for a program that makes use of tmux control mode like iTerm2), you can run arbitrary commands by using a project hook:
 
 ```yaml
@@ -227,15 +236,15 @@ root: ~/
 
 windows:
   - stats:
-    - ssh stats@example.com
-    - tail -f /var/log/stats.log
+      - ssh stats@example.com
+      - tail -f /var/log/stats.log
   - logs:
       layout: main-vertical
       panes:
         - logs:
-          - ssh logs@example.com
-          - cd /var/logs
-          - tail -f development.log
+            - ssh logs@example.com
+            - cd /var/logs
+            - tail -f development.log
 ```
 
 ## ERB
@@ -249,6 +258,7 @@ root: <%= ENV["MY_CUSTOM_DIR"] %>
 You can also pass arguments to your projects, and access them with ERB. Simple arguments are available in an array named `@args`.
 
 Eg:
+
 ```bash
 $ tmuxinator start project foo
 ```
@@ -258,13 +268,12 @@ $ tmuxinator start project foo
 
 name: project
 root: ~/<%= @args[0] %>
-
-...
 ```
 
 You can also pass key-value pairs using the format `key=value`. These will be available in a hash named `@settings`.
 
 Eg:
+
 ```bash
 $ tmuxinator start project workspace=~/workspace/todo
 ```
@@ -274,8 +283,6 @@ $ tmuxinator start project workspace=~/workspace/todo
 
 name: project
 root: ~/<%= @settings["workspace"] %>
-
-...
 ```
 
 ## Starting a session
@@ -303,52 +310,60 @@ mux [command]
 ## Other Commands
 
 Copy an existing project. Aliased to `c` and `cp`
+
 ```
 tmuxinator copy [existing] [new]
 ```
 
 List all the projects you have configured. Aliased to `l` and `ls`
+
 ```
 tmuxinator list
 ```
 
 Remove a project. Aliased to `rm`
+
 ```
 tmuxinator delete [project]
 ```
 
 Remove all tmuxinator configs, aliases and scripts. Aliased to `i`
+
 ```
 tmuxinator implode
 ```
 
 Examines your environment and identifies problems with your configuration
+
 ```
 tmuxinator doctor
 ```
 
 Shows tmuxinator's help. Aliased to `h`
+
 ```
 tmuxinator help
 ```
 
 Shows the shell commands that get executed for a project
+
 ```
 tmuxinator debug [project]
 ```
 
 Shows tmuxinator's version.
+
 ```
 tmuxinator version
 ```
 
 ## Project Configuration Location
 
-Using environment variables, it's possible to define which directory 
-tmuxinator will use when creating or searching for project config 
+Using environment variables, it's possible to define which directory
+tmuxinator will use when creating or searching for project config
 files. (See [PR #511](https://github.com/tmuxinator/tmuxinator/pull/511).)
 
-Tmuxinator will attempt to use the following locations (in this order) when 
+Tmuxinator will attempt to use the following locations (in this order) when
 creating or searching for existing project configuration files:
 
 - `$TMUXINATOR_CONFIG`
